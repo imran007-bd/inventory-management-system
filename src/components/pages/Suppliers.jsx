@@ -9,7 +9,7 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import axios from "axios";
+import axios from "@/lib/api"
 
 const emptySupplierForm = {
   supplierName: "",
@@ -57,7 +57,7 @@ const Suppliers = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/supplier",
+        "/api/supplier",
         authHeaders()
       );
       setSuppliers(response.data.supplier);
@@ -71,7 +71,7 @@ const Suppliers = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/product",
+        "/api/product",
         authHeaders()
       );
       setProducts(response.data.products);
@@ -83,7 +83,7 @@ const Suppliers = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/category",
+        "/api/category",
         authHeaders()
       );
       setCategories(response.data.categories);
@@ -140,12 +140,12 @@ const Suppliers = () => {
     try {
       const response = editSupplier
         ? await axios.put(
-            `http://localhost:3000/api/supplier/${editSupplier}`,
+            `/api/supplier/${editSupplier}`,
             formdata,
             authHeaders()
           )
         : await axios.post(
-            "http://localhost:3000/api/supplier/add",
+            "/api/supplier/add",
             formdata,
             authHeaders()
           );
@@ -165,7 +165,7 @@ const Suppliers = () => {
     if (!window.confirm("Are you sure you want to delete this supplier?")) return;
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/supplier/${id}`,
+        `/api/supplier/${id}`,
         authHeaders()
       );
       if (response.data.success) {
@@ -182,7 +182,7 @@ const Suppliers = () => {
     setOrdersLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/purchase-order?supplierId=${supplierId}`,
+        `/api/purchase-order?supplierId=${supplierId}`,
         authHeaders()
       );
       setOrders(response.data.purchaseOrders);
@@ -243,12 +243,12 @@ const Suppliers = () => {
 
       const response = editOrder
         ? await axios.put(
-            `http://localhost:3000/api/purchase-order/${editOrder}`,
+            `/api/purchase-order/${editOrder}`,
             payload,
             authHeaders()
           )
         : await axios.post(
-            "http://localhost:3000/api/purchase-order/add",
+            "/api/purchase-order/add",
             payload,
             authHeaders()
           );
@@ -268,7 +268,7 @@ const Suppliers = () => {
     if (!window.confirm("Are you sure you want to delete this purchase order?")) return;
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/purchase-order/${id}`,
+        `/api/purchase-order/${id}`,
         authHeaders()
       );
       if (response.data.success) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "@/lib/api"
 import Container from "../Container";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,7 @@ const Categories = () => {
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/api/category", {
+      const response = await axios.get("/api/category", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
         },
@@ -38,7 +38,7 @@ const Categories = () => {
     if (editCategory) {
       try {
         const response = await axios.put(
-          `http://localhost:3000/api/category/${editCategory}`,
+          `/api/category/${editCategory}`,
           { categoryName, categoryDescription },
           {
             headers: {
@@ -65,7 +65,7 @@ const Categories = () => {
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/category/add",
+          "/api/category/add",
           { categoryName, categoryDescription },
           {
             headers: {
@@ -96,7 +96,7 @@ const Categories = () => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       try {
         const response = await axios.delete(
-          `http://localhost:3000/api/category/${id}`,
+          `/api/category/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("pos-token")}`,

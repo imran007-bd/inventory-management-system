@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios";
+import axios from "@/lib/api"
 import Container from "../Container";
 import { Button } from "../ui/button";
 import { MdOutlineCancel } from "react-icons/md";
@@ -51,7 +51,7 @@ const Products = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/api/product", {
+      const response = await axios.get("/api/product", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
         },
@@ -66,7 +66,7 @@ const Products = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/category", {
+      const response = await axios.get("/api/category", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
         },
@@ -79,7 +79,7 @@ const Products = () => {
 
   const fetchSuppliers = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/supplier", {
+      const response = await axios.get("/api/supplier", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
         },
@@ -169,7 +169,7 @@ const Products = () => {
 
       const response = editProduct
         ? await axios.put(
-            `http://localhost:3000/api/product/${editProduct}`,
+            `/api/product/${editProduct}`,
             payload,
             {
               headers: {
@@ -177,7 +177,7 @@ const Products = () => {
               },
             }
           )
-        : await axios.post("http://localhost:3000/api/product/add", payload, {
+        : await axios.post("/api/product/add", payload, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
             },
@@ -197,7 +197,7 @@ const Products = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      const response = await axios.delete(`http://localhost:3000/api/product/${id}`, {
+      const response = await axios.delete(`/api/product/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("pos-token")}`,
         },

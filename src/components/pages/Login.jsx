@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "@/lib/api"
 import Images from "../Images";
 import logo from "/src/assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -33,7 +33,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "/api/auth/login",
         {
           email: email,
           password: password, // Assuming 'password' is used but not fully visible

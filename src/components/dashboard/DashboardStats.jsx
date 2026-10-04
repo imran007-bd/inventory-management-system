@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios";
+import axios from "@/lib/api"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 const LOW_STOCK_THRESHOLD = 10;
@@ -34,10 +34,10 @@ const DashboardStats = ({ scope = "full" }) => {
       try {
         if (scope === "full") {
           const [productsRes, categoriesRes, suppliersRes, purchaseOrdersRes] = await Promise.all([
-            axios.get("http://localhost:3000/api/product", authHeaders()),
-            axios.get("http://localhost:3000/api/category", authHeaders()),
-            axios.get("http://localhost:3000/api/supplier", authHeaders()),
-            axios.get("http://localhost:3000/api/purchase-order", authHeaders()),
+            axios.get("/api/product", authHeaders()),
+            axios.get("/api/category", authHeaders()),
+            axios.get("/api/supplier", authHeaders()),
+            axios.get("/api/purchase-order", authHeaders()),
           ]);
           setProducts(productsRes.data.products);
           setCategories(categoriesRes.data.categories);
@@ -45,8 +45,8 @@ const DashboardStats = ({ scope = "full" }) => {
           setPurchaseOrders(purchaseOrdersRes.data.purchaseOrders);
         } else {
           const [productsRes, categoriesRes] = await Promise.all([
-            axios.get("http://localhost:3000/api/product", authHeaders()),
-            axios.get("http://localhost:3000/api/category", authHeaders()),
+            axios.get("/api/product", authHeaders()),
+            axios.get("/api/category", authHeaders()),
           ]);
           setProducts(productsRes.data.products);
           setCategories(categoriesRes.data.categories);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "@/lib/api"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 
@@ -24,7 +24,7 @@ const PendingApprovals = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get("http://localhost:3000/api/users/pending", authHeaders());
+      const response = await axios.get("/api/users/pending", authHeaders());
       setUsers(response.data.users);
     } catch (error) {
       setError(error.response?.data?.message || error.message);
@@ -40,7 +40,7 @@ const PendingApprovals = () => {
   const handleDecision = async (id, decision) => {
     setActioningId(id);
     try {
-      await axios.patch(`http://localhost:3000/api/users/${id}/${decision}`, {}, authHeaders());
+      await axios.patch(`/api/users/${id}/${decision}`, {}, authHeaders());
       setUsers((prev) => prev.filter((user) => user.id !== id));
     } catch (error) {
       setError(error.response?.data?.message || error.message);

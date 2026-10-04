@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios";
+import axios from "@/lib/api"
 import Container from "../Container";
 import { Button } from "../ui/button";
 import { MdOutlineCancel } from "react-icons/md";
@@ -47,7 +47,7 @@ const Purchase = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/purchase-order",
+        "/api/purchase-order",
         authHeaders()
       );
       setPurchaseOrders(response.data.purchaseOrders);
@@ -61,7 +61,7 @@ const Purchase = () => {
   const fetchSuppliers = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/supplier",
+        "/api/supplier",
         authHeaders()
       );
       setSuppliers(response.data.supplier);
@@ -73,7 +73,7 @@ const Purchase = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/product",
+        "/api/product",
         authHeaders()
       );
       setProducts(response.data.products);
@@ -85,7 +85,7 @@ const Purchase = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/category",
+        "/api/category",
         authHeaders()
       );
       setCategories(response.data.categories);
@@ -155,12 +155,12 @@ const Purchase = () => {
 
       const response = editOrder
         ? await axios.put(
-            `http://localhost:3000/api/purchase-order/${editOrder}`,
+            `/api/purchase-order/${editOrder}`,
             payload,
             authHeaders()
           )
         : await axios.post(
-            "http://localhost:3000/api/purchase-order/add",
+            "/api/purchase-order/add",
             payload,
             authHeaders()
           );
@@ -180,7 +180,7 @@ const Purchase = () => {
     if (!window.confirm("Are you sure you want to delete this purchase order?")) return;
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/purchase-order/${id}`,
+        `/api/purchase-order/${id}`,
         authHeaders()
       );
       if (response.data.success) {

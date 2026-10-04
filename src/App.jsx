@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
@@ -11,7 +11,6 @@ import Sales from "./components/pages/Sales";
 import Suppliers from "./components/pages/Suppliers";
 import Purchase from "./components/pages/Purchase";
 import RootLayout from "./components/layout/RootLayout";
-import Root from "./components/Root";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import Categories from "./components/pages/Categories";
 
@@ -20,7 +19,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<RootLayout />}>
-          <Route index element={<Root />} />
+          <Route index element={<Navigate to="/login" replace />} />
           <Route path="login" element={<Login />} />
           <Route
             path="admindashboard"
@@ -99,6 +98,7 @@ function App() {
               </h1>
             }
           />
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Route>
       </Routes>
     </>

@@ -1,0 +1,26 @@
+name: API health check
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Ping API health endpoint
+        env:
+          API_HEALTH_URL: ${{ secrets.API_HEALTH_URL }}
+        run: |
+          if [ -z "$API_HEALTH_URL" ]; then
+            echo "Set the API_HEALTH_URL repository secret to your API base URL." >&2
+            exit 1
+          fi
+
+          curl --fail --silent --show-error --max-time 20 \
+            "${API_HEALTH_URL%/}/health"

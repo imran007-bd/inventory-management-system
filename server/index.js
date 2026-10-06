@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import process from 'node:process';
-import connectDB from './db/connection.js';
+import connectDB, { sequelize } from './db/connection.js';
 import authRoutes from './routes/auth.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import supplierRoutes from './routes/supplierRoutes.js';
@@ -15,6 +15,15 @@ app.use(
     })
 );
 app.use(express.json());
+app.get('/health', async (_req, res) => {
+    try {
+        await sequelize.authenticate();
+        res.status(200).json({ status: 'ok' });
+    } catch (error) {
+        console.error('Health check failed:', error);
+        res.status(503).json({ status: 'error' });
+    }
+});
 app.use('/api/auth', authRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/supplier', supplierRoutes);

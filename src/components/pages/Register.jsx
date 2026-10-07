@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import axios from '@/lib/api'
 import { Eye, EyeOff } from "lucide-react";
 import Images from '../Images'
 import logo from '/src/assets/logo.png'
@@ -27,14 +27,12 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("manager");
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setSuccess(null);
 
     try {
       const response = await axios.post("/api/auth/register", {
@@ -45,8 +43,12 @@ const Register = () => {
         role,
       });
       if (response.data.success) {
-        setSuccess(response.data.message);
-        setTimeout(() => navigate("/login"), 2000);
+        navigate("/login", {
+          state: {
+            registrationNotice:
+              "Registration successful. An admin must approve your account before you can log in.",
+          },
+        });
       } else {
         setError(response.data.message);
       }
@@ -74,11 +76,6 @@ const Register = () => {
         {error && (
           <div className="w-fit bg-red-200 text-red-700 p-2 mb-4 rounded text-center">
             {error}
-          </div>
-        )}
-        {success && (
-          <div className="w-fit bg-green-200 text-green-700 p-2 mb-4 rounded text-center">
-            {success}
           </div>
         )}
         <CardDescription>

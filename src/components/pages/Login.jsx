@@ -3,7 +3,7 @@ import axios from "@/lib/api"
 import { Eye, EyeOff } from "lucide-react";
 import Images from "../Images";
 import logo from "/src/assets/logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Container from "../Container";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +21,8 @@ import { useAuth } from "@/context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const registrationNotice = location.state?.registrationNotice;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -76,6 +78,15 @@ const Login = () => {
               Login To Your{" "}
               <span className="text-[#45BA8C] text-xl">Account</span>
             </CardTitle>
+            {registrationNotice && (
+              <div
+                role="status"
+                aria-live="polite"
+                className="w-fit bg-green-200 text-green-800 p-2 mb-4 rounded text-center"
+              >
+                {registrationNotice}
+              </div>
+            )}
             {error && (
               <div className="w-fit  bg-red-200 text-red-700 p-2 mb-4 rounded text-center">
                 {error}
